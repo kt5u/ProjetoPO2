@@ -1,29 +1,22 @@
 package pt.ipbeja.po2.app.model;
 
-import javafx.application.Platform;
-import javafx.scene.control.Alert;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.io.*;
 
 public class WSRead {
-    public static final String EOL = System.getProperty("line.separator");
-
-    public String read(File file) {
-        StringBuilder fileContent = new StringBuilder();
-        try (Scanner scanner = new Scanner(file)) {
-            while (scanner.hasNextLine()) {
-                fileContent.append(scanner.nextLine()).append(EOL);
+    public String Read(File file){
+        StringBuilder formattedContent = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/words.txt")))
+        {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                formattedContent.append(line.trim()).append("\n");
             }
-        } catch (FileNotFoundException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("File not found!");
-            alert.setContentText("Error opening file");
-            alert.showAndWait();
-            Platform.exit(); // System.exit(1);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        return fileContent.toString();
+        if (!formattedContent.isEmpty()) {
+            formattedContent.setLength(formattedContent.length() - 1);
+        }
+        return formattedContent.toString();
     }
 }

@@ -4,7 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import pt.ipbeja.po2.app.model.WSModel;
-import pt.ipbeja.po2.app.model.WSRead;
+
 
 /**
  * Start a game with a hardcoded board
@@ -15,15 +15,8 @@ public class StartWordSearch extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        final String boardContent =
-                """
-                CASAIAED
-                FFWFMERW
-                WIQFELAA
-                OFLFESFI
-                EFFAFFPP
-                """;
 
+        String boardContent = "DASIKMDIASD"; //TODO
         WSModel WSModel = new WSModel(boardContent);
         WSBoard WSBoard = new WSBoard(WSModel);
         primaryStage.setScene(new Scene(WSBoard));
