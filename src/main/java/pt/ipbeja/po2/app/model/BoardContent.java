@@ -15,10 +15,15 @@ public class BoardContent {
         StringBuilder boardContent = new StringBuilder();
         String[] wordsFoundInFile = inputString.split(" ");
 
-        for(int row = 0; row < size; row++){
-
+        for(int i = 0; i < wordsFoundInFile.length; i++){
+            for(int row = 0; row < size; row++){
+                if(wordsFoundInFile[i].length() > size){
+                    boardContent.append(RandomChar());
+                } else {
+                    boardContent.append(wordsFoundInFile[i]);
+                }
+            }
         }
-
         return boardContent.toString();
     }
 }
