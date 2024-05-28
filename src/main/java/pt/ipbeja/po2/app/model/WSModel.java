@@ -27,8 +27,13 @@ public class WSModel {
         }
     }
 
-    public int nLines() { return this.lettersGrid.size(); }
-    public int nCols() { return this.lettersGrid.get(0).size(); }
+    public int nLines() {
+        return this.lettersGrid.size();
+    }
+
+    public int nCols() {
+        return this.lettersGrid.get(0).size();
+    }
 
     public void registerView(WSView wsView) {
         this.wsView = wsView;

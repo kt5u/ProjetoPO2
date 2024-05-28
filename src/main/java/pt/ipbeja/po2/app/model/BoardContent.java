@@ -4,14 +4,21 @@ import java.util.Random;
 
 public class BoardContent {
 
-    private String boardcontent;
-    private WSRead wsRead;
-    private final String Alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-    private char getRandomLetter(){
+    private char RandomChar(){
         Random rand = new Random();
-        int RandomNumber = rand.nextInt(Alphabet.length() + 1);
-        return Alphabet.charAt(RandomNumber);
+        final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        int RandomNumber = rand.nextInt(alphabet.length() + 1);
+        return alphabet.charAt(RandomNumber);
     }
 
+    private String boardContent(String inputString, int size) {
+        StringBuilder boardContent = new StringBuilder();
+        String[] wordsFoundInFile = inputString.split(" ");
+
+        for(int row = 0; row < size; row++){
+
+        }
+
+        return boardContent.toString();
+    }
 }

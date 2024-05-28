@@ -15,27 +15,27 @@ public class StartWordSearch extends Application {
     @Override
     public void start(Stage primaryStage) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Open text File");
+        fileChooser.setTitle("Fetching textfiles");
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Text Files", "*.txt", ".tex"));
         File file = fileChooser.showOpenDialog(primaryStage);
         if (file != null) {
             String signText = WSRead.Read(file);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Sign");
-            alert.setHeaderText("Look, a Sign");
+            alert.setTitle("Select a text file");
+            alert.setHeaderText("File content:");
             alert.setContentText(signText);
             alert.showAndWait();
         }
 
-        String boardContent = "ABCD\nEFGH\nIJKL\nMNOP"; //TODO
+        String boardContent = "ABCDXX\nEFGHXX\nIJKLXX\nMNOPXX";
 
         WSModel WSModel = new WSModel(boardContent);
         WSBoard WSBoard = new WSBoard(WSModel);
 
         primaryStage.setScene(new Scene(WSBoard));
         WSModel.registerView(WSBoard);
-        WSBoard.requestFocus(); // to remove focus from first button
+        WSBoard.requestFocus();
         primaryStage.show();
     }
 

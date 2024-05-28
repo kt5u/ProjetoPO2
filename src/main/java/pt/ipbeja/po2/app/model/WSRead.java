@@ -7,7 +7,7 @@ import java.io.*;
 import java.util.Scanner;
 
 public class WSRead {
-    public static final String EOL = System.getProperty("line.separator");
+    public static final String EOL = System.lineSeparator();
 
     public static String Read(File file){
         StringBuilder s = new StringBuilder();
@@ -21,7 +21,6 @@ public class WSRead {
             alert.setHeaderText("File not found!");
             alert.setContentText("Error opening file ");
             alert.showAndWait();
-            Platform.exit(); // System.exit(1);
         }
         return s.toString();
     }
