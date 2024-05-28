@@ -10,7 +10,7 @@ public class BoardContent {
 
     private char getRandomLetter(){
         Random rand = new Random();
-        int RandomNumber = rand.nextInt(Alphabet.length());
+        int RandomNumber = rand.nextInt(Alphabet.length() + 1);
         return Alphabet.charAt(RandomNumber);
     }
 

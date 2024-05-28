@@ -1,26 +1,39 @@
 package pt.ipbeja.po2.app.ui;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import pt.ipbeja.po2.app.model.WSModel;
+import pt.ipbeja.po2.app.model.WSRead;
 
+import java.io.File;
 
-/**
- * Start a game with a hardcoded board
- * @author anonymized
- * @version 2024/04/14
- */
 public class StartWordSearch extends Application {
     @Override
     public void start(Stage primaryStage) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open text File");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Text Files", "*.txt", ".tex"));
+        File file = fileChooser.showOpenDialog(primaryStage);
+        if (file != null) {
+            String signText = WSRead.Read(file);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Sign");
+            alert.setHeaderText("Look, a Sign");
+            alert.setContentText(signText);
+            alert.showAndWait();
+        }
 
+        String boardContent = "ABCD\nEFGH\nIJKL\nMNOP"; //TODO
 
-        String boardContent = "DASIKMDIASD"; //TODO
         WSModel WSModel = new WSModel(boardContent);
         WSBoard WSBoard = new WSBoard(WSModel);
-        primaryStage.setScene(new Scene(WSBoard));
 
+        primaryStage.setScene(new Scene(WSBoard));
         WSModel.registerView(WSBoard);
         WSBoard.requestFocus(); // to remove focus from first button
         primaryStage.show();
