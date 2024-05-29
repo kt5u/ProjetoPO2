@@ -11,14 +11,15 @@ import java.util.List;
  */
 public class WSModel {
 
-
     // The following matrix could also be List<List<Character>>
     // for a more complex game, it should be a List<List<Cell>>
     // where Letter is a class with the letter and other attributes
     private final List<List<String>> lettersGrid;
     private WSView wsView;
+    private int nLines;
+    private int nCols;
 
-    public WSModel(String boardContent) {
+   /* public WSModel(String boardContent) {
         this.lettersGrid = new ArrayList<>();
         lettersGrid.add(new ArrayList<>());
         for(char c : boardContent.toCharArray()) {
@@ -26,6 +27,20 @@ public class WSModel {
             else lettersGrid.get(lettersGrid.size() - 1).add(c + "");
         }
     }
+    */
+
+
+
+    public WSModel(List<List<String>> lettersGrid) {
+        this.lettersGrid = lettersGrid;
+        for (int i = 0; i < nLines; i++) {
+            lettersGrid.add(new ArrayList<>());
+            for (int j = 0; j < nCols; j++) {
+                lettersGrid.get(i).add("");
+            }
+        }
+    }
+
 
     public int nLines() {
         return this.lettersGrid.size();
@@ -47,7 +62,6 @@ public class WSModel {
     public String textInPosition(Position position) {
         return this.lettersGrid.get(position.line()).get(position.col());
     }
-
 
     /**
      * Check if all words were found

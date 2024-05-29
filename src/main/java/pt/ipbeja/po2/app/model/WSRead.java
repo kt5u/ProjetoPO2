@@ -1,27 +1,39 @@
 package pt.ipbeja.po2.app.model;
 
-import javafx.application.Platform;
-import javafx.scene.control.Alert;
-
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WSRead {
-    public static final String EOL = System.lineSeparator();
 
-    public static String Read(File file){
-        StringBuilder s = new StringBuilder();
-        try (Scanner scanner = new Scanner(file)) {
-            while (scanner.hasNextLine()) {
-                s.append(scanner.nextLine()).append(EOL);
-            }
-        } catch (FileNotFoundException e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("File not found!");
-            alert.setContentText("Error opening file ");
-            alert.showAndWait();
+    public static File chooseFile() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Select a Text File");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt");
+        fileChooser.setFileFilter(filter);
+        int result = fileChooser.showOpenDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            return fileChooser.getSelectedFile();
+        } else {
+            return null;
         }
-        return s.toString();
+    }
+
+    public static List<String> words(File file) {
+        List<String> words = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] wordsInLine = line.split("\\s+"); // Split by whitespace
+                for (String word : wordsInLine) {
+                    words.add(word);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return words;
     }
 }
