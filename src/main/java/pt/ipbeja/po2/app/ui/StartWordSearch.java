@@ -9,7 +9,6 @@ import javafx.stage.Stage;
 import pt.ipbeja.po2.app.model.BoardContent;
 import pt.ipbeja.po2.app.model.WSModel;
 import pt.ipbeja.po2.app.model.WSRead;
-
 import java.io.File;
 
 public class StartWordSearch extends Application {
@@ -24,7 +23,7 @@ public class StartWordSearch extends Application {
         if (file != null) {
             String signText = WSRead.Read(file);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Select a text file");
+            alert.setTitle("Text file fetched");
             alert.setHeaderText("File content:");
             alert.setContentText(signText);
             alert.showAndWait();
@@ -32,9 +31,7 @@ public class StartWordSearch extends Application {
 
         BoardContent board = new BoardContent();
 
-        String boardContent = "ABCDEFG\nABCDEFG\nABCDEFG\nABCDEFG\nABCDEFG";
-
-        WSModel WSModel = new WSModel(boardContent);
+        WSModel WSModel = new WSModel(board.boardContent(WSRead.Read(file), 5));
         WSBoard WSBoard = new WSBoard(WSModel);
 
         primaryStage.setScene(new Scene(WSBoard));
