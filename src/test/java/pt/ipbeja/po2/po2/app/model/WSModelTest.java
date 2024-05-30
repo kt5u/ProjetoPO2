@@ -1,10 +1,8 @@
 package pt.ipbeja.po2.po2.app.model;
 
+
 import org.junit.jupiter.api.Test;
 import pt.ipbeja.app.model.*;
-
-import javax.swing.*;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -12,10 +10,10 @@ class WSModelTest {
 
     @Test
     void testWordFound() {
-        JFileChooser fileChooser = new JFileChooser();
-        WSModel model = new WSModel(BoardContent.createLettersGrid(WSRead.words(fileChooser.getSelectedFile()), 7, 7));
+        BoardContent board = new BoardContent();
+        WSModel model = new WSModel("a"); //TODO
         this.registerEmptyView(model);
-        assertEquals("PEA", model.wordFound("PEA"));
+        assertEquals("MALA", model.wordFound("MALA"));
     }
 
     @Test

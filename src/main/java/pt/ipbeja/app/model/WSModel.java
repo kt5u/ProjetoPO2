@@ -2,6 +2,7 @@ package pt.ipbeja.app.model;
 
 
 import javax.swing.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,9 +13,6 @@ import java.util.List;
  */
 public class WSModel {
 
-    // The following matrix could also be List<List<Character>>
-    // for a more complex game, it should be a List<List<Cell>>
-    // where Letter is a class with the letter and other attributes
     private final List<List<String>> lettersGrid;
     private WSView wsView;
     private int nLines;
@@ -29,7 +27,6 @@ public class WSModel {
         }
     }
 
-
     public WSModel(List<List<String>> lettersGrid) {
         this.lettersGrid = lettersGrid;
         for (int i = 0; i < nLines; i++) {
@@ -39,7 +36,6 @@ public class WSModel {
             }
         }
     }
-
 
     public int nLines() {
         return this.lettersGrid.size();
@@ -77,14 +73,8 @@ public class WSModel {
      * @return true if the word is in the board
      */
     public String wordFound(String word) {
-        JFileChooser fileChooser = new JFileChooser();
-        WSRead read = new WSRead();
-        List<String> foundWords = read.words(fileChooser.getSelectedFile());
-        StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < foundWords.size(); i++) {
-            sb.append(foundWords.get(i));
-        }
-        return sb.toString();
+        //TODO
+        return word;
     }
 
     /*
