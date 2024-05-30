@@ -1,8 +1,5 @@
 package pt.ipbeja.app.model;
 
-
-import javax.swing.*;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,7 +65,7 @@ public class WSModel {
      * Check if all words were found
      * @return  true if all words were found
      */
-    public boolean allWordsWereFound() {
+    public static boolean allWordsWereFound() {
         // TODO: implement this method
         return true;
     }

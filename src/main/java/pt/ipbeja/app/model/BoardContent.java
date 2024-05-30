@@ -15,7 +15,7 @@ public class BoardContent {
         return ALPHABET.charAt(randomNumber);
     }
 
-    /**
+    /*
      * Creates the board using the words found in the file (inputString)
      * and writes a random char in the blank cells.
      */
@@ -28,7 +28,6 @@ public class BoardContent {
                 boolean horizontal = RAND.nextBoolean();
                 int row = RAND.nextInt(nLines);
                 int col = RAND.nextInt(nCols);
-
                 if (canPlaceWord(grid, word, row, col, horizontal)) {
                     placeWord(grid, word, row, col, horizontal);
                     placed = true;
