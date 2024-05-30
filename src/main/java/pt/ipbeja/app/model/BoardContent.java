@@ -1,4 +1,4 @@
-package pt.ipbeja.po2.app.model;
+package pt.ipbeja.app.model;
 
 import java.util.*;
 
@@ -24,6 +24,7 @@ public class BoardContent {
         Random rand = new Random();
 
         for (String word : words) {
+
             boolean placed = false;
             while (!placed) {
                 boolean horizontal = rand.nextBoolean();

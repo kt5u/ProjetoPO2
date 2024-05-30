@@ -1,14 +1,13 @@
-package pt.ipbeja.po2.app.ui;
+package pt.ipbeja.app.ui;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import pt.ipbeja.po2.app.model.BoardContent;
-import pt.ipbeja.po2.app.model.WSModel;
-import pt.ipbeja.po2.app.model.WSRead;
+import pt.ipbeja.app.model.BoardContent;
+import pt.ipbeja.app.model.WSModel;
+import pt.ipbeja.app.model.WSRead;
 import java.io.File;
 import java.util.List;
 
@@ -32,9 +31,8 @@ public class StartWordSearch extends Application {
 
         BoardContent content = new BoardContent();
         WSRead read = new WSRead();
-        WSModel WSModel = new WSModel(content.createLettersGrid(read.words(file), 7, 7)); // board creation with the text file fetched
+        WSModel WSModel = new WSModel(content.createLettersGrid(read.words(file), 8, 8)); // board creation with the text file fetched
         WSBoard WSBoard = new WSBoard(WSModel);
-
         primaryStage.setScene(new Scene(WSBoard));
         WSModel.registerView(WSBoard);
         WSBoard.requestFocus();

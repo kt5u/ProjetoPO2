@@ -1,8 +1,7 @@
-package pt.ipbeja.po2.app.model;
+package pt.ipbeja.app.model;
 
 
 import javax.swing.*;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 

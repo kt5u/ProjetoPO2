@@ -1,4 +1,4 @@
-package pt.ipbeja.po2.app.model;
+package pt.ipbeja.app.model;
 
 import java.util.List;
 

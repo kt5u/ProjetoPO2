@@ -1,4 +1,4 @@
-package pt.ipbeja.po2.app.ui;
+package pt.ipbeja.app.ui;
 
 
 import javafx.collections.ObservableList;
@@ -6,10 +6,10 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
-import pt.ipbeja.po2.app.model.MessageToUI;
-import pt.ipbeja.po2.app.model.Position;
-import pt.ipbeja.po2.app.model.WSModel;
-import pt.ipbeja.po2.app.model.WSView;
+import pt.ipbeja.app.model.WSView;
+import pt.ipbeja.app.model.MessageToUI;
+import pt.ipbeja.app.model.Position;
+import pt.ipbeja.app.model.WSModel;
 
 
 /**
