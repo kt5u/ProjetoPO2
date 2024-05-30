@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class WSRead {
@@ -26,9 +27,9 @@ public class WSRead {
     }
 
     /*
-    *  Copies the file itself to /src/main/resources for later testing
+    *  Copies the file itself to /src/main/resources
     */
-    public static File copyFileToResources(File source) {
+    public static void copyFileToResources(File source) {
         if (source == null) {
             throw new IllegalArgumentException("Source file is null");
         }
@@ -40,10 +41,8 @@ public class WSRead {
             while ((length = is.read(buffer)) > 0) {
                 os.write(buffer, 0, length);
             }
-            return dest;
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
         }
     }
 
@@ -57,9 +56,7 @@ public class WSRead {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] wordsInLine = line.split("\\s+"); // Split by whitespace
-                for(String word : wordsInLine) {
-                    words.add(word);
-                }
+                Collections.addAll(words, wordsInLine);
             }
         } catch (IOException e) {
             e.printStackTrace();

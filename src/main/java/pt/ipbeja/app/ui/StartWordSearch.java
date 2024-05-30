@@ -29,9 +29,7 @@ public class StartWordSearch extends Application {
             alert.showAndWait();
         }
 
-        BoardContent content = new BoardContent();
-        WSRead read = new WSRead();
-        WSModel WSModel = new WSModel(content.createLettersGrid(read.words(file), 8, 8)); // board creation with the text file fetched
+        WSModel WSModel = new WSModel(BoardContent.createLettersGrid(WSRead.words(file), 6, 6)); // board creation with the text file fetched
         WSBoard WSBoard = new WSBoard(WSModel);
         primaryStage.setScene(new Scene(WSBoard));
         WSModel.registerView(WSBoard);

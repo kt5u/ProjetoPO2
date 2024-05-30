@@ -18,6 +18,9 @@ public class WSModel {
     private int nLines;
     private int nCols;
 
+    /*
+    * Creates the game using a string (this function is mainly used for testing)
+    */
     public WSModel(String boardContent) {
         this.lettersGrid = new ArrayList<>();
         lettersGrid.add(new ArrayList<>());
@@ -27,6 +30,9 @@ public class WSModel {
         }
     }
 
+    /*
+    * Creates the game using a list of a String list (2-dimensional List)
+    */
     public WSModel(List<List<String>> lettersGrid) {
         this.lettersGrid = lettersGrid;
         for (int i = 0; i < nLines; i++) {
