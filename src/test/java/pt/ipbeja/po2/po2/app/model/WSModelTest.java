@@ -3,6 +3,8 @@ package pt.ipbeja.po2.po2.app.model;
 import org.junit.jupiter.api.Test;
 import pt.ipbeja.po2.app.model.*;
 
+import javax.swing.*;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -12,9 +14,9 @@ class WSModelTest {
     void testWordFound() {
         BoardContent content = new BoardContent();
         WSRead read = new WSRead();
-        WSModel model = new WSModel(content.createLettersGrid(read.words(file), 7, 7));
+        JFileChooser fileChooser = new JFileChooser();
+        WSModel model = new WSModel(content.createLettersGrid(read.words(fileChooser.getSelectedFile()), 7, 7));
         this.registerEmptyView(model);
-
         assertEquals("PEA", model.wordFound("PEA"));
     }
 

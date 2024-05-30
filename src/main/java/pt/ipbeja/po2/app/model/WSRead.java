@@ -8,8 +8,8 @@ import java.util.List;
 
 public class WSRead {
 
+    static JFileChooser fileChooser = new JFileChooser();
     public static File chooseFile() {
-        JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Select a Text File");
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Files", "txt");
         fileChooser.setFileFilter(filter);
@@ -27,7 +27,7 @@ public class WSRead {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] wordsInLine = line.split("\\s+"); // Split by whitespace
-                for (String word : wordsInLine) {
+                for(String word : wordsInLine) {
                     words.add(word);
                 }
             }

@@ -1,6 +1,8 @@
 package pt.ipbeja.po2.app.model;
 
 
+import javax.swing.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +21,7 @@ public class WSModel {
     private int nLines;
     private int nCols;
 
-   /* public WSModel(String boardContent) {
+    public WSModel(String boardContent) {
         this.lettersGrid = new ArrayList<>();
         lettersGrid.add(new ArrayList<>());
         for(char c : boardContent.toCharArray()) {
@@ -27,8 +29,6 @@ public class WSModel {
             else lettersGrid.get(lettersGrid.size() - 1).add(c + "");
         }
     }
-    */
-
 
 
     public WSModel(List<List<String>> lettersGrid) {
@@ -78,11 +78,17 @@ public class WSModel {
      * @return true if the word is in the board
      */
     public String wordFound(String word) {
-        // TODO implement this method
-        return word;
+        JFileChooser fileChooser = new JFileChooser();
+        WSRead read = new WSRead();
+        List<String> foundWords = read.words(fileChooser.getSelectedFile());
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < foundWords.size(); i++) {
+            sb.append(foundWords.get(i));
+        }
+        return sb.toString();
     }
 
-    /**
+    /*
      * Check if the word with wildcard is in the board
      * @param word
      * @return  true if the word with wildcard is in the board

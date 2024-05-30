@@ -11,5 +11,4 @@ public record Position(int line, int col) {
     public String toString() {
         return line + ", " + col;
     }
-
 }
