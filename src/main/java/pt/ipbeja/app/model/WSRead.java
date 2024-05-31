@@ -9,7 +9,8 @@ import java.util.List;
 
 public class WSRead {
     static JFileChooser fileChooser = new JFileChooser();
-    private static final String RESOURCES_PATH = "src/main/resources/";
+    public static final String RESOURCES_PATH = "src/main/resources/";
+    static List<String> words = new ArrayList<>();
 
     /*
      *  Asks user to provide a text file
@@ -50,7 +51,6 @@ public class WSRead {
     * Writes all the words found in the file into a String List
     */
     public static List<String> words(File file) {
-        List<String> words = new ArrayList<>();
         WSRead.copyFileToResources(file);
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
@@ -61,6 +61,10 @@ public class WSRead {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return words;
+    }
+
+    public List<String> getWords() {
         return words;
     }
 }

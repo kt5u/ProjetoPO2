@@ -32,9 +32,6 @@ class WSModelTest {
         assertTrue(model.allWordsWereFound());
     }
 
-
-
-
     private void registerEmptyView(WSModel model) {
         model.registerView(new WSView() {
             @Override
