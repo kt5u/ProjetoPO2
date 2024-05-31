@@ -11,4 +11,14 @@ public record Position(int line, int col) {
     public String toString() {
         return line + ", " + col;
     }
+
+    public int getCol() {
+        return col;
+    }
+
+    public int getLine() {
+        return line;
+    }
+
+
 }

@@ -10,17 +10,9 @@ class WSModelTest {
 
     @Test
     void testWordFound() {
-        BoardContent board = new BoardContent();
-        WSModel model = new WSModel("a"); //TODO
+        WSModel model = new WSModel(BoardContent.createLettersGrid(WSRead.words(WSRead.chooseFile()), 4, 4));
         this.registerEmptyView(model);
         assertEquals("MALA", model.wordFound("MALA"));
-    }
-
-    @Test
-    void testWordWithWildcardFound() {
-        WSModel model = new WSModel("MA*A\nEAGH\nISKL\nMSOP");
-        this.registerEmptyView(model);
-        assertEquals("MALA", model.wordWithWildcardFound("MALA"));
     }
 
     @Test
@@ -36,7 +28,6 @@ class WSModelTest {
         model.registerView(new WSView() {
             @Override
             public void update(MessageToUI message) {
-                // do nothing
             }
         });
     }

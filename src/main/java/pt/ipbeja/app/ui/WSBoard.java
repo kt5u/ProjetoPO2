@@ -1,11 +1,15 @@
 package pt.ipbeja.app.ui;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import pt.ipbeja.app.model.*;
 
+import java.security.cert.PolicyNode;
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -17,65 +21,141 @@ public class WSBoard extends GridPane implements WSView {
     private final WSModel wsModel;
     private static final int SQUARE_SIZE = 80;
     WSRead read = new WSRead();
-    private List<Button> buttons;
-    private Button firstClickedButton;
+    private Button[][] buttons;
+    private Button begin;
+    private Button end;
+    private List<Button> pressedButtons = new ArrayList<>();
 
     /*
      * Create a board with letters
      */
     public WSBoard(WSModel wsModel) {
         this.wsModel = wsModel;
+        this.buttons = new Button[wsModel.nLines()][wsModel.nCols()];
         this.buildGUI();
     }
 
     /**
      * Build the interface
      */
-        private void buildGUI() {
-            // create one label for each position
-            for (int line = 0; line < this.wsModel.nLines(); line++) {
-                for (int col = 0; col < this.wsModel.nCols(); col++) {
-                    String textForButton = this.wsModel.textInPosition(new Position(line, col));
-                    Button button = new Button(textForButton);
-                    button.setMinWidth(SQUARE_SIZE);
-                    button.setMinHeight(SQUARE_SIZE);
-                    button.setOnAction(createButtonClickHandler(button));
-                    this.add(button, col, line); // adds button to GridPane
-                }
+    private void buildGUI() {
+        // create one button for each position
+        for (int line = 0; line < this.wsModel.nLines(); line++) {
+            for (int col = 0; col < this.wsModel.nCols(); col++) {
+                String textForButton = this.wsModel.textInPosition(new Position(line, col));
+                Button button = new Button(textForButton);
+                button.setMinWidth(SQUARE_SIZE);
+                button.setMinHeight(SQUARE_SIZE);
+                button.setOnAction(createButtonClickHandler(button));
+                this.add(button, col, line); // adds button to GridPane
+                buttons[line][col] = button; // store the button in the 2D array
             }
-            this.requestFocus();
         }
+        this.requestFocus();
+    }
 
-        /*
-         * Checks if when all the buttons in between the ones pressed
-         * form a word present in the file
-         */
-        public boolean formsWord(List<Button> buttons, Button begin, Button end) {
-            int beginIndex = buttons.indexOf(begin);
-            int endIndex = buttons.indexOf(end);
-
-            if (beginIndex == -1 || endIndex == -1 || beginIndex >= endIndex) {
-                return false;
-            }
-
-            StringBuilder wordFormed = new StringBuilder();
-            for (int i = beginIndex + 1; i < endIndex; i++) {
-                wordFormed.append(buttons.get(i).getText());
-            }
-
-            String wordFormedString = wordFormed.toString();
-            return read.getWords().contains(wordFormedString);
+    /*
+     * Forms a word from buttons pressed
+     */
+    private String wordFormed(List<Button> buttons) {
+        StringBuilder wordFormed = new StringBuilder();
+        for (Button button : buttons) {
+            wordFormed.append(button.getText());
         }
+        return wordFormed.toString();
+    }
+
+    private boolean containsWord(String word) {
+        return read.getWords().contains(word);
+    }
 
     private EventHandler<ActionEvent> createButtonClickHandler(Button button) {
         return event -> {
             button.setStyle("-fx-background-color: yellow");
+            pressedButtons.add(button);
 
+            if (pressedButtons.size() == 1) {
+                begin = button;
+            } else if (pressedButtons.size() == 2) {
+                end = button;
+                List<Button> pathButtons = getPathButtons(begin, end);
+                String formedWord = wordFormed(pathButtons);
+                System.out.println("Formed word: " + formedWord);
+                if (containsWord(formedWord)) {
+                    System.out.println("Word found: " + formedWord);
+                    setButtonsColor(pathButtons, "green");
+                } else {
+                    System.out.println("Word not found");
+                    setButtonsColor(pathButtons, "grey");
+                }
+                // Reset for next word selection
+                resetButtons();
+            }
         };
+    }
+
+    /*
+    * Finds the path to the first button clicked to the second one
+    */
+    private List<Button> getPathButtons(Button start, Button end) {
+        List<Button> pathButtons = new ArrayList<>();
+
+        int startRow = GridPane.getRowIndex(start);
+        int startCol = GridPane.getColumnIndex(start);
+        int endRow = GridPane.getRowIndex(end);
+        int endCol = GridPane.getColumnIndex(end);
+
+        // Adding start button to the path
+        pathButtons.add(start);
+
+        if (startRow == endRow) { // horizontal
+            int step = (startCol < endCol) ? 1 : -1; // Determine the direction
+            for (int col = startCol + step; col != endCol + step; col += step) {
+                pathButtons.add(getButtonAt(this,startRow, col));
+            }
+        } else if (startCol == endCol) { // vertical
+            int step = (startRow < endRow) ? 1 : -1; // Determine the direction
+            for (int row = startRow + step; row != endRow + step; row += step) {
+                pathButtons.add(getButtonAt(this,row, startCol));
+            }
+        }
+        return pathButtons;
+    }
+
+
+    // Helper method to get the button at a specific row and column
+    private Button getButtonAt(GridPane gridPane, int row, int col) {
+        ObservableList<Node> children = gridPane.getChildren();
+
+        for (Node node : children) {
+            if (node instanceof Button && GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col) {
+                return (Button) node;
+            }
+        }
+
+        return null; // Button not found at the specified row and column
+    }
+
+    private void setButtonsColor(List<Button> buttons, String color) {
+        for (Button btn : buttons) {
+            btn.setStyle("-fx-background-color: " + color);
+        }
+    }
+
+    private void resetButtons() {
+        // Reset the list for the next word selection
+        for (Button button : pressedButtons) {
+            if (!button.getStyle().equals("-fx-background-color: green")) { // if button is not green
+                button.setStyle("");
+            }
+        }
+        pressedButtons.clear();
+        begin = null;
+        end = null;
     }
 
     @Override
     public void update(MessageToUI messageToUI) {
-
+        // Handle updates from the model if necessary
     }
 }

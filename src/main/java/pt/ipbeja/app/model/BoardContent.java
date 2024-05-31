@@ -103,4 +103,8 @@ public class BoardContent {
             }
         }
     }
+
+    public static List<String> wordsFromSavedFile() {
+
+    }
 }
