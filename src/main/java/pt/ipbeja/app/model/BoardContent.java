@@ -1,5 +1,8 @@
 package pt.ipbeja.app.model;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class BoardContent {
@@ -104,7 +107,7 @@ public class BoardContent {
         }
     }
 
-    public static List<String> wordsFromSavedFile() {
-
+    public static List<String> wordsFromSavedFile(String filePath) throws IOException {
+        return Files.readAllLines(Paths.get(filePath));
     }
 }

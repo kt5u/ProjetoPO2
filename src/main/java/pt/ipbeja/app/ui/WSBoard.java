@@ -69,6 +69,9 @@ public class WSBoard extends GridPane implements WSView {
         return read.getWords().contains(word);
     }
 
+    /*
+    * When button is clicked (color)
+    */
     private EventHandler<ActionEvent> createButtonClickHandler(Button button) {
         return event -> {
             button.setStyle("-fx-background-color: yellow");

@@ -10,7 +10,7 @@ class WSModelTest {
 
     @Test
     void testWordFound() {
-        WSModel model = new WSModel(BoardContent.createLettersGrid(WSRead.words(WSRead.chooseFile()), 4, 4));
+        WSModel model = new WSModel("ACCD\nEAGH\nISKL\nMAOP");
         this.registerEmptyView(model);
         assertEquals("MALA", model.wordFound("MALA"));
     }

@@ -1,5 +1,7 @@
 package pt.ipbeja.app.model;
 
+import pt.ipbeja.app.ui.WSBoard;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,8 +78,7 @@ public class WSModel {
      * @return true if the word is in the board
      */
     public String wordFound(String word) {
-
-        return word;
+        return
     }
 
     /*
