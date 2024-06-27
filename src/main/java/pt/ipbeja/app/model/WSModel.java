@@ -1,5 +1,6 @@
 package pt.ipbeja.app.model;
 
+import javafx.scene.control.Button;
 import pt.ipbeja.app.ui.WSBoard;
 
 import java.util.ArrayList;
@@ -13,7 +14,8 @@ import java.util.List;
 public class WSModel {
 
     private final List<List<String>> lettersGrid;
-    private WSView wsView;
+    WSRead read = new WSRead();
+    static WSBoard board;
     private int nLines;
     private int nCols;
 
@@ -51,7 +53,20 @@ public class WSModel {
     }
 
     public void registerView(WSView wsView) {
-        this.wsView = wsView;
+    }
+
+    public static int wordsFoundCounter(List<Button> buttons) {
+
+        StringBuilder wordFormed = new StringBuilder();
+        int counter = 0;
+        for (Button button : buttons) {
+            wordFormed.append(button.getText());
+        }
+
+        if(WSRead.getWords().contains(wordFormed.toString())) {
+            counter++;
+        }
+        return counter;
     }
 
     /**
@@ -67,27 +82,19 @@ public class WSModel {
      * Check if all words were found
      * @return  true if all words were found
      */
-    public static boolean allWordsWereFound() {
-        // TODO: implement this method
-        return true;
-    }
-
-    /**
-     * Check if the word is in the board
-     * @param word
-     * @return true if the word is in the board
-     */
-    public String wordFound(String word) {
-       return null;
+    public static boolean allWordsWereFound(List<String> words) {
+        return wordsFoundCounter(board.pressedButtons) == words.size();
     }
 
     /*
-     * Check if the word with wildcard is in the board
-     * @param word
-     * @return  true if the word with wildcard is in the board
-     */
-    public String wordWithWildcardFound(String word) {
-        // TODO implement this method
-        return word;
+     * Check if the word is in the board
+    */
+     public String wordFound(List<Button> buttons, List<String> words) {
+         String word = board.wordFormed(buttons);
+         if(words.contains(word)) {
+             return word;
+         } else {
+             return null;
+         }
     }
 }

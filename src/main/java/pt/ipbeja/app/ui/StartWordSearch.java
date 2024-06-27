@@ -20,7 +20,10 @@ public class StartWordSearch extends Application {
                 new FileChooser.ExtensionFilter("Text Files", "*.txt", ".tex"));
         File file = fileChooser.showOpenDialog(primaryStage);
 
-        if (file != null) {                         // In case text file is blank
+        /*
+        * In case text file is null
+        */
+        if (file != null) {
             List<String> signText = WSRead.words(file);
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Text file fetched");
@@ -32,7 +35,7 @@ public class StartWordSearch extends Application {
         /*
         * Board creation using the fetched file and specified number of lines/columns
         */
-        WSModel WSModel = new WSModel(BoardContent.createLettersGrid(WSRead.words(file), 9, 9));
+        WSModel WSModel = new WSModel(BoardContent.createLettersGrid(WSRead.words(file), 12, 12));
         WSBoard WSBoard = new WSBoard(WSModel);
         primaryStage.setScene(new Scene(WSBoard));
         WSModel.registerView(WSBoard);

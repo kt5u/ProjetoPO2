@@ -64,7 +64,7 @@ public class WSRead {
         return words;
     }
 
-    public List<String> getWords() {
+    public static List<String> getWords() {
         return words;
     }
 }

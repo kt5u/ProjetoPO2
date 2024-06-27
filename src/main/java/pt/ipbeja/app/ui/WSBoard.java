@@ -1,13 +1,11 @@
 package pt.ipbeja.app.ui;
 
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import pt.ipbeja.app.model.*;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,13 +15,14 @@ import java.util.List;
  * @version 2024/04/14
  */
 public class WSBoard extends GridPane implements WSView {
+
     private final WSModel wsModel;
-    private static final int SQUARE_SIZE = 80;
+    private final int SQUARE_SIZE = 80;
     WSRead read = new WSRead();
-    private Button[][] buttons;
-    private Button begin;
-    private Button end;
-    private List<Button> pressedButtons = new ArrayList<>();
+    public Button[][] buttons;
+    public Button begin;
+    public Button end;
+    public List<Button> pressedButtons = new ArrayList<>();
 
     /*
      * Create a board with letters
@@ -37,7 +36,7 @@ public class WSBoard extends GridPane implements WSView {
     /**
      * Build the interface
      */
-    private void buildGUI() {
+    public void buildGUI() {
         // create one button for each position
         for (int line = 0; line < this.wsModel.nLines(); line++) {
             for (int col = 0; col < this.wsModel.nCols(); col++) {
@@ -45,7 +44,7 @@ public class WSBoard extends GridPane implements WSView {
                 Button button = new Button(textForButton);
                 button.setMinWidth(SQUARE_SIZE);
                 button.setMinHeight(SQUARE_SIZE);
-                button.setOnAction(createButtonClickHandler(button));
+                button.setOnAction(createButtonClickHandler(button, line, col));
                 this.add(button, col, line); // adds button to GridPane
                 buttons[line][col] = button; // store the button in the 2D array
             }
@@ -56,7 +55,7 @@ public class WSBoard extends GridPane implements WSView {
     /*
      * Forms a word from buttons pressed
      */
-    private String wordFormed(List<Button> buttons) {
+    public String wordFormed(List<Button> buttons) {
         StringBuilder wordFormed = new StringBuilder();
         for (Button button : buttons) {
             wordFormed.append(button.getText());
@@ -64,18 +63,18 @@ public class WSBoard extends GridPane implements WSView {
         return wordFormed.toString();
     }
 
-    private boolean containsWord(String word) {
+    public boolean containsWord(String word) {
         return read.getWords().contains(word);
     }
 
     /*
-    * When button is clicked (color)
-    */
-    private EventHandler<ActionEvent> createButtonClickHandler(Button button) {
+     * When button is clicked (color)
+     */
+    private EventHandler<ActionEvent> createButtonClickHandler(Button button, int line, int col) {
         return event -> {
             button.setStyle("-fx-background-color: yellow");
             pressedButtons.add(button);
-
+            System.out.println(new Position(line, col));
             if (pressedButtons.size() == 1) {
                 begin = button;
             } else if (pressedButtons.size() == 2) {
@@ -97,10 +96,14 @@ public class WSBoard extends GridPane implements WSView {
     }
 
     /*
-    * Finds the path to the first button clicked to the second one
-    */
-    private List<Button> getPathButtons(Button start, Button end) {
+     * Finds the path to the first button clicked to the second one
+     */
+    public List<Button> getPathButtons(Button start, Button end) {
         List<Button> pathButtons = new ArrayList<>();
+
+        if (start == null || end == null) {
+            return pathButtons;
+        }
 
         int startRow = GridPane.getRowIndex(start);
         int startCol = GridPane.getColumnIndex(start);
@@ -113,29 +116,20 @@ public class WSBoard extends GridPane implements WSView {
         if (startRow == endRow) { // horizontal
             int step = (startCol < endCol) ? 1 : -1; // Determine the direction
             for (int col = startCol + step; col != endCol + step; col += step) {
-                pathButtons.add(getButtonAt(this,startRow, col));
+                pathButtons.add(getButtonAt(startRow, col));
             }
         } else if (startCol == endCol) { // vertical
             int step = (startRow < endRow) ? 1 : -1; // Determine the direction
             for (int row = startRow + step; row != endRow + step; row += step) {
-                pathButtons.add(getButtonAt(this,row, startCol));
+                pathButtons.add(getButtonAt(row, startCol));
             }
         }
         return pathButtons;
     }
 
-
     // Helper method to get the button at a specific row and column
-    private Button getButtonAt(GridPane gridPane, int row, int col) {
-        ObservableList<Node> children = gridPane.getChildren();
-
-        for (Node node : children) {
-            if (node instanceof Button && GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == col) {
-                return (Button) node;
-            }
-        }
-
-        return null; // Button not found at the specified row and column
+    public Button getButtonAt(int line, int col) {
+        return buttons[line][col];
     }
 
     private void setButtonsColor(List<Button> buttons, String color) {
@@ -144,7 +138,6 @@ public class WSBoard extends GridPane implements WSView {
         }
     }
 
-
     private void resetButtons() {
         // Reset the list for the next word selection
         for (Button button : pressedButtons) {
@@ -152,6 +145,7 @@ public class WSBoard extends GridPane implements WSView {
                 button.setStyle("");
             }
         }
+
         pressedButtons.clear();
         begin = null;
         end = null;
