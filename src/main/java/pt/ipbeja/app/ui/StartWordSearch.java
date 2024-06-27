@@ -32,7 +32,7 @@ public class StartWordSearch extends Application {
         /*
         * Board creation using the fetched file and specified number of lines/columns
         */
-        WSModel WSModel = new WSModel(BoardContent.createLettersGrid(WSRead.words(file), 6, 6));
+        WSModel WSModel = new WSModel(BoardContent.createLettersGrid(WSRead.words(file), 9, 9));
         WSBoard WSBoard = new WSBoard(WSModel);
         primaryStage.setScene(new Scene(WSBoard));
         WSModel.registerView(WSBoard);

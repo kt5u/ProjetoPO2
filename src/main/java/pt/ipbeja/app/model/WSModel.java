@@ -78,7 +78,7 @@ public class WSModel {
      * @return true if the word is in the board
      */
     public String wordFound(String word) {
-        return
+       return null;
     }
 
     /*

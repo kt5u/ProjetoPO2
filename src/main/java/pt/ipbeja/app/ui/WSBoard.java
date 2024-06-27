@@ -7,8 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import pt.ipbeja.app.model.*;
-
-import java.security.cert.PolicyNode;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -144,6 +143,7 @@ public class WSBoard extends GridPane implements WSView {
             btn.setStyle("-fx-background-color: " + color);
         }
     }
+
 
     private void resetButtons() {
         // Reset the list for the next word selection
